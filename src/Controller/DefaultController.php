@@ -17,6 +17,10 @@ class DefaultController extends AbstractController
 	$articles = $this->getDoctrine()
 			 ->getRepository(Article::class)
 			 ->findAll();
+	if(!$articles) {
+		throw $this->createNotFoundException(
+		'Aucun article disponible');
+	}
         return $this->render('default/index.html.twig', [
             'articles' =>$articles]);
     }
