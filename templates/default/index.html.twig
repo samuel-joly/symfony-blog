@@ -4,14 +4,34 @@
 
 {% block body %}
 
-<div class='row justify-content-start align-items-center'>
-	{% for article in articles %}
-	<div class='shadow col-3 border-rounded-lg bg-light m-2 d-flex flex-column justify-content-center align-items-center'>
-		<u class='p-0 h5 m-0'>{{ article.Nom }}</u>
-		<small class='mt-0 text-left align-self-end'>{{ article.DateParution ? article.DateParution|date('Y-m-d') : '' }}</small>
-		<p class='text-justify'> {{ article.Description }}</p>
-	</div>
-	{% endfor %}
+        {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+            <div class='accordion w-50 m-auto' id='accordionArticle'>
+                {% for article in articles %}
+                  <div class="card">
+                    <div class="card-header p-0" id="article-{{article.id}}">
+                      <h2 class="mb-0 p-0 text-center">
+                        <button class="btn btn-link row p-3 w-100" type="button" data-toggle="collapse" data-target="#a{{ article.id }}" aria-expanded="false" aria-controls="{{article.id}}" style='text-decoration:none;color:black;'>
+                            <span class='col-9 '>{{ article.Nom }}</span> 
+                            <span class=' col-2 badge badge-secondary justify-self-end'>
+                                {{ article.DateParution|date('Y-m-d') }}
+                            </span>
 
-</div>
+                        </button>
+                      </h2>
+                    </div>
+
+                    <div id="a{{article.id}}" class="collapse" aria-labelledby="article-{{article.id}}" data-parent="#accordionArticle">
+                      <div class="card-body">
+                            {{ article.Description }}
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class='d-flex justify-content-center align-items-center'>
+                <p class='h5'><a href='/login' style='text-decoration:none;'>Connectez</a> ou <a href='/register' style='text-decoration:none;'>inscrivez</a> vous pour accéder aux articles</p>
+            </div>
+        {% endif %}
+
 {% endblock %}

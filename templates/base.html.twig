@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Blog{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
-    <body class=''>
-    	<header class='row bg-light justify-content-end align-items-center'>
-		<div class='col-9 m-0 d-flex flex-column justify-content-center align-items-center '>
-			<p class='h5 text-center'>Blog</p>
-			<small class='text-center'>Test symfony</small>
-		</div>
 
-		<div class='col-2 dropdown d-flex justify-content-end m-1'>
-			<button class='btn btn-primary dropdown-toggle' type='button' id='dropdown-info' data-toggle='dropdown' aria-haspopup='true' aria-expanded="false">Compte</button>
-			<div class='dropdown-menu' arial-labelledby='dropdown-info'>
-				<a class='dropdown-item' href='/register'>S'inscrire</a>
-				<a class='dropdown-item' href='/login'>Se connecter</a>
-			</div>
-		</div>
+    <body class='' style='height:100vh;'>
+    	<header class='navbar navbar-expand navbar-light'>
+            <a href='/default' class='navbar-brand'>
+                <img src='logo.svg' style='color:black;width:1.3em;'/>
+                Blog
+            </a>
+            <div class='collapse navbar-collapse justify-content-end'>
+                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    <a class='btn btn-outline-warning justify-self-end' href='/logout'>Déconnexion</a>
+                {% else %}
+                    <a href='/login' class='btn btn-outline-primary m-1'>Connexion</a>
+                    <a href='/register' class='btn btn-success m-1'>Inscription</a>
+                {% endif %}
+            </div>
 	</header>
+
+
         {% block body %}{% endblock %}
+
+
         {% block javascripts %}
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 	{% endblock %}
+
+
     </body>
 </html>

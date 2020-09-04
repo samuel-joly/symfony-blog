@@ -14,6 +14,7 @@ class DefaultController extends AbstractController
      */
     public function index()
     {
+
 	$articles = $this->getDoctrine()
 			 ->getRepository(Article::class)
 			 ->findAll();
