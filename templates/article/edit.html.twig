@@ -1,13 +1,29 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Article{% endblock %}
+{% block title %}Modifier l'article  {% endblock %}
 
 {% block body %}
-    <h1>Edit Article</h1>
+    <h1 class='text-center ' >Modifier <br><small>'{{ article.Nom }}'</small></h1>
+    
+    {{ form_start(form, {'attr' : {'class' : ' m-auto d-flex flex-column justify-content-center align-items-center', 'style':'width:fit-content'}}) }}
+        <div class='form-group'>
+            {{ form_label(form.Date_parution, "Date de parution", {'label_attr':{'class':'w-100 text-center'}}) }}
+            {{ form_widget(form.Date_parution, {'attr' : {'class':'w-100 text-center d-flex justify-content-start align-items-start form-control', 'style':'width:200px'}}) }}
+        </div>
 
-    {{ include('article/_form.html.twig', {'button_label': 'Update'}) }}
+        <div class='form-group'>
+            {{ form_label(form.Nom, "Nom de l'article", {'label_attr':{'class':'w-100 text-center'}}) }}
+            {{ form_widget(form.Nom, {'attr' : {'class':'form-control w-100 text-center'}}) }}
+        </div>
 
-    <a href="{{ path('article_index') }}">back to list</a>
+        <div class='form-group'>
+            {{ form_label(form.Description, "Description", {'label_attr' : {'class':'w-100 text-center'}}) }}
+            {{ form_widget(form.Description, {'attr' : {'class':'form-control text-center', 'row':'10', 'col':'30', 'style':'width:400px;height:100px;'}}) }}
+        </div>
 
-    {{ include('article/_delete_form.html.twig') }}
+        <button type="submit" class="btn btn-primary m-2 ">Sauvegarder</button>
+        <a href="{{ path('default') }}" class='btn btn-outline-danger'>Retour a l'accueil</a>
+    {{ form_end(form) }}
+
+
 {% endblock %}

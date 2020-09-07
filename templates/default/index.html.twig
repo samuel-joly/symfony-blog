@@ -5,17 +5,16 @@
 {% block body %}
 
         {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-            <div class='accordion w-50 m-auto' id='accordionArticle'>
+            <div class='accordion m-auto' id='accordionArticle'>
                 {% for article in articles %}
                   <div class="card">
                     <div class="card-header p-0" id="article-{{article.id}}">
                       <h2 class="mb-0 p-0 text-center">
-                        <button class="btn btn-link row p-3 w-100" type="button" data-toggle="collapse" data-target="#a{{ article.id }}" aria-expanded="false" aria-controls="{{article.id}}" style='text-decoration:none;color:black;'>
-                            <span class='col-9 '>{{ article.Nom }}</span> 
-                            <span class=' col-2 badge badge-secondary justify-self-end'>
+                        <button class="btn btn-link d-flex justify-content-center align-items-center p-3 w-100" type="button" data-toggle="collapse" data-target="#a{{ article.id }}" aria-expanded="false" aria-controls="{{article.id}}" style='text-decoration:none;color:black;' style='position:relative;'>
+                            <span class='mr-1 '>{{ article.Nom }}</span> 
+                            <span class='badge badge-secondary justify-self-end'>
                                 {{ article.DateParution|date('Y-m-d') }}
                             </span>
-
                         </button>
                       </h2>
                     </div>

@@ -6,6 +6,7 @@ use App\Entity\Article;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ArticleType extends AbstractType
 {
@@ -13,7 +14,9 @@ class ArticleType extends AbstractType
     {
         $builder
             ->add('Nom')
-            ->add('Date_parution')
+            ->add('Date_parution', DateType::class, [
+                'widget' => 'single_text'
+            ])
             ->add('Description')
         ;
     }

@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+<div class='row p-3 bg-light m-2 justify-content-evenly'>
+
+    {% for article in articles %}
+        <div class='col-3 border m-1 p-0 bg-white'>
+            {{ article.Nom }} - {{ article.DateParution|date('Y-m-d') }} - <b>[{{ article.id }}]</b><br>
+            <small class='mt-2 '>{{ article.Description|slice(0,89) }} [...]</small>
+
+            <div class='d-flex  justify-content-center align-items-center p-0 m-0' style='position:absolute; bottom:-0em;right:-0.5px;'>
+                <a href='/article/{{ article.id }}/edit' class='btn btn-link m-0 p-0'>
+                    <img src='{{ absolute_url(asset('edit.png')) }}' width='15' height='15'/>
+                </a>
+
+                <form method='post' action="{{ path('article_delete' , {'id':article.id}) }}" class='btn'>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ article.id) }}">
+                    <button class='btn p-0' style='position:absolute;bottom:-0em;right:0.2em;'>
+                        <img src='{{absolute_url(asset('delete.png'))}}' width='15' height='15' />
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+
+    <a href='/article/new' class='m-1 p-0 col-1 bg-light text-center btn btn-link border align-items-center justify-content-center d-flex' style='text-decoration:none;'>+</a>
+</div>
+
+
+<div class='d-flex flex-column flex-wrap p-3 m-2 justify-content-evenly' style='max-height:10em;overflow-y:scroll;'>
+    {% for user in users %}
+        <div class='bg-light m-1 p-0' style='max-height:1.5em;position:relative;'>
+            <p class='m-0 p-0 row'>
+                <u class='col-3 m-0 p-0'>{{user.email}}</u><b class='col-5 m-0 p-0'>{{user.roles[0]}} [{{user.id}}]</b>
+            </p>
+
+            <div class='d-flex  justify-content-center align-items-center p-0 m-0' style='position:absolute; bottom:-0em;right:-0px;'>
+                <a href='/user/{{ user.id }}/edit' class='btn btn-link m-0 p-0'>
+                    <img src='{{ absolute_url(asset('edit.png')) }}' width='15' height='15'/>
+                </a>
+
+                <form method='post' action="{{ path('user_delete' , {'id':user.id}) }}" class='btn'>
+                    <input type="hidden" name="_method" value="DELETE">
+                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+                    <button class='btn p-0' style='position:absolute;bottom:-0em;right:0.2em;'>
+                        <img src='{{absolute_url(asset('delete.png'))}}' width='15' height='15' />
+                    </button>
+                </form>
+            </div>
+        </div>
+    {% endfor %}
+    <a href='/user/new' class='bg-light text-center btn btn-link border align-items-center justify-content-center d-flex' style='max-height:1.5em;text-decoration:none;'>+</a>
+</div>
+{% endblock %}

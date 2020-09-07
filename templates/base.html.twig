@@ -12,11 +12,14 @@
     <body class='' style='height:100vh;'>
     	<header class='navbar navbar-expand navbar-light'>
             <a href='/default' class='navbar-brand'>
-                <img src='logo.svg' style='color:black;width:1.3em;'/>
+                <img src='{{ absolute_url(asset('logo.svg'))}}' style='color:black;width:1.3em;'/>
                 Blog
             </a>
             <div class='collapse navbar-collapse justify-content-end'>
                 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href='/admin' class='mr-2 btn btn-outline-primary' style='text-decoration:none;color:black;'>Admin</a>
+                    {% endif %}
                     <a class='btn btn-outline-warning justify-self-end' href='/logout'>Déconnexion</a>
                 {% else %}
                     <a href='/login' class='btn btn-outline-primary m-1'>Connexion</a>
