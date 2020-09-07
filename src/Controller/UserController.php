@@ -68,6 +68,14 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $avatar = $form->get("avatar")->getData();
+
+            if($avatar) {
+                $filename = $user->getId().'.'.$avatar->guessExtension();
+
+                $avatar->move('.', $filename);
+            }
+            $user->setAvatar($filename);
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('user_index');

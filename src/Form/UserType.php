@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\File;
 
 class UserType extends AbstractType
 {
@@ -21,6 +23,7 @@ class UserType extends AbstractType
                     'Administrateur' => 'ROLE_ADMIN']
             ])
             ->add('password')
+            ->add('avatar', FileType::class)
         ;
 
         $builder->get('roles')
@@ -30,6 +33,16 @@ class UserType extends AbstractType
                     },
                     function($rolesString) {
                         return [$rolesString];
+                    }
+                ));
+
+        $builder->get('avatar')
+                ->addModelTransformer(new CallbackTransformer(
+                    function($avatarString) {
+                        return strlen($avatarString) ? new File($avatarString) : null;
+                    },
+                    function($avatarFile) {
+                        return $avatarFile;
                     }
                 ));
     }
